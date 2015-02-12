@@ -33,6 +33,7 @@ load_template( SP_BASE_DIR . '/library/functions/functions-admin.php' );
 load_template( SP_BASE_DIR . '/library/functions/theme-options.php'); // All theme options settings
 load_template( SP_BASE_DIR . '/library/functions/meta-boxes.php'); // All Metabox settings for post, page and custom template
 load_template( SP_BASE_DIR . '/library/functions/functions-menu.php'); //Menu setup
+load_template( SP_BASE_DIR . '/library/custom-posts/custom-posts.php'); // Register custom post and taxonmies
 load_template( SP_BASE_DIR . '/library/widgets/widgets.php'); // Register widgets and related functions
 load_template( SP_BASE_DIR . '/library/shortcodes/shortcodes.php');  // Register shortcode
 /**
