@@ -87,4 +87,37 @@ if( !function_exists('sp_theme_setup') ) {
 	add_action( 'after_setup_theme', 'sp_theme_setup' );
 
 }
+/**
+ * ----------------------------------------------------------------------------------------
+ * Email Notification
+ * ----------------------------------------------------------------------------------------
+ */
 
+$to = 'sovandayorn@gmail.com';
+$subject = 'Test Message';
+$message = 'Hello Sovanda';
+
+wp_mail( $to, $subject, $message );
+
+register_activation_hook( __FILE__, 'wi_create_send_email_schedule');
+function wi_create_send_email_schedule(){
+	$timestamp = wp_next_scheduled( 'wi_create_send_email');
+	
+	if( $timestamp == false ){
+		wp_schedule_event( time(), 'one_minute', 'wi_create_send_email');
+	}
+}
+
+add_action( 'wi_create_send_email', 'wi_create_email');
+function wi_create_email(){
+	echo "Hello World";
+}
+
+add_filter( 'cron_schedules', 'wi_add_minute_schedule' ); 
+function wi_add_minute_schedule( $schedules ) {
+  $schedules['one_minute'] = array(
+    'interval' => 60, // 60 seconds
+    'display' => __( 'Every one minute', 'my-plugin-domain' )
+  );
+  return $schedules;
+}
