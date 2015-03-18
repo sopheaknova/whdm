@@ -106,12 +106,45 @@ function wi_create_send_email_schedule(){
 }
 
 function wi_create_email(){
-	//echo "Hello World";
-	$to = 'sopheak.peas@gmail.com';
-	$subject = 'Test Message';
-	$message = 'Hello Sovanda';
-	
-	wp_mail( $to, $subject, $message );
+	global $post;
+	$reminder = 2592000; // 90 days = 7776000;
+	$args = array(
+			'post_type'			=> 'sp_order',
+			'posts_per_page'	=>	-1,
+			'order'				=> 	'ASC',
+			'meta_query' => array(
+								array(
+									'key'     => 'sp_order_expire_date_h',
+									'value'   => date('Y-m-d h:i', time() + $reminder ),
+									'type'	  => 'datetime',
+									'compare' => '<=',
+								),
+							),
+			
+		);
+	$custom_query = new WP_Query( $args );
+	if( $custom_query->have_posts() ) :
+		while ( $custom_query->have_posts() ) : $custom_query->the_post();
+			$date_expire  = get_post_meta( $post->ID, 'sp_order_expire_date_h', true );
+			$client_name  = get_post_meta( $post->ID, 'sp_client_contact_name', true );
+			$client_email = sp_get_email_client( get_post_meta( $post->ID, 'sp_order_client_name', true ) );
+
+					$to = $client_email;
+					$subject = 'Website Renewal Notice';
+					$message = 'Dear' . $client_name . ',' . '<br>' . 
+							   'Your domain names' . $client_name . 'that renew manually will expire on' . $date_expire . '. So please do reply to confirm to renew' . '<br>' .
+							   'Kindly Regards,' . '<br>' .
+							   'NOVA (cambodia) Co., Ltd' . '<br>' .
+							   'P. +855 090 223 677' . '<br>' .
+							   'E. sokheng.lay@novacambodia.com';
+					wp_mail( $to, $subject, $message );
+
+		endwhile; wp_reset_postdata();
+	?>
+	<?php else : ?>
+		<h5>There are no product order will expire.</h5>
+	<?php	
+	endif; 
 }
 
 function wi_add_minute_schedule( $schedules ) {
@@ -120,4 +153,11 @@ function wi_add_minute_schedule( $schedules ) {
     'display' => __( 'Every one minute', 'my-plugin-domain' )
   );
   return $schedules;
+}
+
+function sp_get_email_client( $post_id ) {
+	global $post;
+	$client = get_post_meta( $post_id, 'sp_client_email', true );
+	
+	return $client;
 }
