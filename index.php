@@ -5,6 +5,7 @@
 ?>
 
 <?php get_header(); ?>
+
 	<?php do_action( 'sp_start_content_wrap_html' ); ?>
 
 	<!-- <h2>Welcome to <?php echo strtoupper(wp_get_theme()->get( 'Name' )); ?></h2>
@@ -15,7 +16,7 @@
 	</ul> -->
 
 	<h2>Order List</h2>
-		<table>
+		<table class="order-list">
 			<thead>
 				<tr>
 					<th>#</th>
@@ -37,59 +38,59 @@
 			$count = 1;
 			if( $custom_query->have_posts() ) :
 				while ( $custom_query->have_posts() ) : $custom_query->the_post(); ?>
+
+				<?php 
+					$reminder = 2592000; // 90 days = 7776000;
+					$expire_h = get_post_meta( $post->ID, 'sp_order_expire_date_h', true );
+					$expire_d = get_post_meta( $post->ID, 'sp_order_expire_date_d', true );
+					$before_reminder_h = strtotime($expire_h) - $reminder;
+					$before_reminder_d = strtotime($expire_d) - $reminder;
+					$status_h = get_post_meta( $post->ID, 'sp_order_status_h', true );
+					$status_d = get_post_meta( $post->ID, 'sp_order_status_d', true );
+					$now = strtotime('now');
+					
+					if ( $status_h == "on" ) :
+						$reminder_h = $before_reminder_h - $now;
+					elseif ($status_h == "off" && $status_d == "on" ) :
+						$reminder_d = $before_reminder_d - $now;
+					endif;
+				?>
 			
 				<tr>
 					<td><?php echo $count?></td>
-					<td><a class="sp_info_client" href="<?php echo esc_url( get_permalink(get_post_meta( $post->ID, 'sp_order_client_name', true )) ); ?>"><?php echo get_the_title( get_post_meta( $post->ID, 'sp_order_client_name', true ) ); ?></a>
+					<td>
+						<a class="sp-info-client" href="<?php echo esc_url( get_permalink(get_post_meta( $post->ID, 'sp_order_client_name', true )) ); ?>"><?php echo get_the_title( get_post_meta( $post->ID, 'sp_order_client_name', true ) ); ?></a>
 					</td>
-					<td><h6><?php the_title(); ?></h6>
-						<?php if (get_post_meta( $post->ID, 'sp_order_status_h', true ) == "on" ) : ?>
-						<i><?php echo get_post_meta( $post->ID, 'sp_order_domain_name_h', true ); ?></i></br>
+					<td><h5><a href="<?php echo admin_url( 'post.php?post=' . $post->ID ) . '&action=edit'; ?>"><?php the_title(); ?></a></h5>
+						<?php if ($status_h == "on" ) : ?>
+						<span><?php echo get_post_meta( $post->ID, 'sp_order_domain_name_h', true ); ?></span>
 						<?php endif ?>
 						 
-						<i><?php 
-							if (get_post_meta( $post->ID, 'sp_order_status_d', true ) == "on" ) :
-								echo get_post_meta( $post->ID, 'sp_order_domain_name_d', true );
-							endif;
-						?></i>
+						
+						<?php if ($status_d == "on" ) : ?>
+						<div class="addon-domain">	
+							<h6>Addon domain:</h6> 	
+							<span><?php echo get_post_meta( $post->ID, 'sp_order_domain_name_d', true ); ?> </span>
+							<span class="addon-expire">Expire on: <?php echo date("j F, Y", strtotime(get_post_meta( $post->ID, 'sp_order_expire_date_d', true ))); ?> </span>
+						</div>
+						<?php endif; ?>
 					</td>
 					<td><?php 
-							if ((get_post_meta( $post->ID, 'sp_order_status_h', true ) == "on" && get_post_meta( $post->ID, 'sp_order_status_d', true ) == "on" ) || (get_post_meta( $post->ID, 'sp_order_status_h', true ) == "on" && get_post_meta( $post->ID, 'sp_order_status_d', true ) == "off" )) :
-
-							 	echo get_post_meta( $post->ID, 'sp_order_register_date_h', true );
-							elseif (get_post_meta( $post->ID, 'sp_order_status_h', true ) == "off" && get_post_meta( $post->ID, 'sp_order_status_d', true ) == "on" ) :
-
-								echo get_post_meta( $post->ID, 'sp_order_register_date_d', true );
+							if ( $status_h == "on" ) :
+							 	echo date("j F, Y", strtotime(get_post_meta( $post->ID, 'sp_order_register_date_h', true )));
 							endif;
 				    	?>
 				    </td>
 					<td><?php
-							if ((get_post_meta( $post->ID, 'sp_order_status_h', true ) == "on" && get_post_meta( $post->ID, 'sp_order_status_d', true ) == "on" ) || (get_post_meta( $post->ID, 'sp_order_status_h', true ) == "on" && get_post_meta( $post->ID, 'sp_order_status_d', true ) == "off" )) :
-
-							 	echo get_post_meta( $post->ID, 'sp_order_expire_date_h', true );
-							elseif (get_post_meta( $post->ID, 'sp_order_status_h', true ) == "off" && get_post_meta( $post->ID, 'sp_order_status_d', true ) == "on" ) :
-
-								echo get_post_meta( $post->ID, 'sp_order_expire_date_d', true );
+							if ( $status_h == "on" ) :
+							 	echo  date("j F, Y", strtotime(get_post_meta( $post->ID, 'sp_order_expire_date_h', true )));
 							endif; 
 						?>
-						</br>
+						<br>
 
 						<?php
-							$onemonth = 2592000;
-							$expire_h = get_post_meta( $post->ID, 'sp_order_expire_date_h', true );
-							$expire_d = get_post_meta( $post->ID, 'sp_order_expire_date_d', true );
-							$before_onemonth_h = strtotime($expire_h) - $onemonth;
-							$before_onemonth_d = strtotime($expire_d) - $onemonth;
-
-							$now = strtotime('now');
-							if ((get_post_meta( $post->ID, 'sp_order_status_h', true ) == "on" && get_post_meta( $post->ID, 'sp_order_status_d', true ) == "on" ) || (get_post_meta( $post->ID, 'sp_order_status_h', true ) == "on" && get_post_meta( $post->ID, 'sp_order_status_d', true ) == "off" )) :
-								$result_onemonth = $before_onemonth_h - $now;
-							elseif (get_post_meta( $post->ID, 'sp_order_status_h', true ) == "off" && get_post_meta( $post->ID, 'sp_order_status_d', true ) == "on" ) :
-								$result_onemonth = $before_onemonth_d - $now;
-							endif;
-
-							if ($result_onemonth <= $onemonth) :
-								echo '<i style="color:red">Out Of Date Before 30 Days</i>';
+							if ($reminder_h <= $reminder) :
+								echo '<i style="color:red">Renewal</i>';
 							endif;
 						?>
 					</td>
@@ -101,10 +102,10 @@
 		</table>
 		<script type="text/javascript">
         	jQuery(document).ready(function ($){
-	        	$('.sp_info_client').magnificPopup({
+	        	$('.sp-info-client').magnificPopup({
 					type: 'ajax',
 					overflowY: 'scroll'
-				});
+			});
         });
     	</script>
 	<?php do_action( 'sp_end_content_wrap_html' ); ?>

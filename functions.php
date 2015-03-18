@@ -93,13 +93,10 @@ if( !function_exists('sp_theme_setup') ) {
  * ----------------------------------------------------------------------------------------
  */
 
-$to = 'sovandayorn@gmail.com';
-$subject = 'Test Message';
-$message = 'Hello Sovanda';
+add_action( 'wp', 'wi_create_send_email_schedule' );
+add_action( 'wi_create_send_email', 'wi_create_email');
+add_filter( 'cron_schedules', 'wi_add_minute_schedule' ); 
 
-wp_mail( $to, $subject, $message );
-
-register_activation_hook( __FILE__, 'wi_create_send_email_schedule');
 function wi_create_send_email_schedule(){
 	$timestamp = wp_next_scheduled( 'wi_create_send_email');
 	
@@ -108,12 +105,15 @@ function wi_create_send_email_schedule(){
 	}
 }
 
-add_action( 'wi_create_send_email', 'wi_create_email');
 function wi_create_email(){
-	echo "Hello World";
+	//echo "Hello World";
+	$to = 'sopheak.peas@gmail.com';
+	$subject = 'Test Message';
+	$message = 'Hello Sovanda';
+	
+	wp_mail( $to, $subject, $message );
 }
 
-add_filter( 'cron_schedules', 'wi_add_minute_schedule' ); 
 function wi_add_minute_schedule( $schedules ) {
   $schedules['one_minute'] = array(
     'interval' => 60, // 60 seconds
