@@ -325,52 +325,52 @@ $post_type_order_product_meta = array(
 	            'src'         => ''
 	          ),
 	          array(
-	            'value'       => '1-year',
+	            'value'       => '1',
 	            'label'       => '1 Year',
 	            'src'         => ''
 	          ),
 	          array(
-	            'value'       => '2-years',
+	            'value'       => '2',
 	            'label'       => '2 Years',
 	            'src'         => ''
 	          ),
 	          array(
-	            'value'       => '3-years',
+	            'value'       => '3',
 	            'label'       => '3 Years',
 	            'src'         => ''
 	          ),
 	          array(
-	            'value'       => '4-years',
+	            'value'       => '4',
 	            'label'       => '4 Years',
 	            'src'         => ''
 	          ),
 	          array(
-	            'value'       => '5-years',
+	            'value'       => '5',
 	            'label'       => '5 Years',
 	            'src'         => ''
 	          ),
 	          array(
-	            'value'       => '6-years',
+	            'value'       => '6',
 	            'label'       => '6 Years',
 	            'src'         => ''
 	          ),
 	          array(
-	            'value'       => '7-years',
+	            'value'       => '7',
 	            'label'       => '7 Years',
 	            'src'         => ''
 	          ),
 	          array(
-	            'value'       => '8-years',
+	            'value'       => '8',
 	            'label'       => '8 Years',
 	            'src'         => ''
 	          ),
 	          array(
-	            'value'       => '9-years',
+	            'value'       => '9',
 	            'label'       => '9 Years',
 	            'src'         => ''
 	          ),
 	          array(
-	            'value'       => '10-years',
+	            'value'       => '10',
 	            'label'       => '10 Years',
 	            'src'         => ''
 	          )
@@ -435,52 +435,52 @@ $post_type_order_additional_domain = array(
 	            'src'         => ''
 	          ),
 	          array(
-	            'value'       => '1-year',
+	            'value'       => '1',
 	            'label'       => '1 Year',
 	            'src'         => ''
 	          ),
 	          array(
-	            'value'       => '2-years',
+	            'value'       => '2',
 	            'label'       => '2 Years',
 	            'src'         => ''
 	          ),
 	          array(
-	            'value'       => '3-years',
+	            'value'       => '3',
 	            'label'       => '3 Years',
 	            'src'         => ''
 	          ),
 	          array(
-	            'value'       => '4-years',
+	            'value'       => '4',
 	            'label'       => '4 Years',
 	            'src'         => ''
 	          ),
 	          array(
-	            'value'       => '5-years',
+	            'value'       => '5',
 	            'label'       => '5 Years',
 	            'src'         => ''
 	          ),
 	          array(
-	            'value'       => '6-years',
+	            'value'       => '6',
 	            'label'       => '6 Years',
 	            'src'         => ''
 	          ),
 	          array(
-	            'value'       => '7-years',
+	            'value'       => '7',
 	            'label'       => '7 Years',
 	            'src'         => ''
 	          ),
 	          array(
-	            'value'       => '8-years',
+	            'value'       => '8',
 	            'label'       => '8 Years',
 	            'src'         => ''
 	          ),
 	          array(
-	            'value'       => '9-years',
+	            'value'       => '9',
 	            'label'       => '9 Years',
 	            'src'         => ''
 	          ),
 	          array(
-	            'value'       => '10-years',
+	            'value'       => '10',
 	            'label'       => '10 Years',
 	            'src'         => ''
 	          )

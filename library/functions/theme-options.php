@@ -912,7 +912,7 @@ function custom_theme_options() {
 		// Footer: Copyright
 		array(
 			'id'		=> 'second',
-			'label'		=> 'second Reminder',
+			'label'		=> 'Second Reminder',
 			'desc'		=> 'Replace the second Reminder',
 			'std'		=> '2592000',
 			'type'		=> 'text',

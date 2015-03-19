@@ -564,26 +564,58 @@ function wi_create_email(){
 	$custom_query = new WP_Query( $args );
 	if( $custom_query->have_posts() ) :
 		while ( $custom_query->have_posts() ) : $custom_query->the_post();
+			$product_id   = get_post_meta( $post->ID, 'sp_order_hosting_package_h', true );
+			$product_name = get_the_title($product_id);
+			$unit_price   = get_post_meta( $product_id, 'sp_product_price', true );
+			$qty 		  = get_post_meta( $post->ID, 'sp_order_period_h', true );
+			$total        = $qty * $unit_price ;
 			$date_expire  = get_post_meta( $post->ID, 'sp_order_expire_date_h', true );
 			$client_name  = get_the_title( get_post_meta( $post->ID, 'sp_order_client_name', true ) );
 			$domain_name  = get_post_meta( $post->ID, 'sp_order_domain_name_h', true );
 			$client_email = sp_get_email_client( get_post_meta( $post->ID, 'sp_order_client_name', true ) );
 
-					$to = $client_email;
+					$to_client = $client_email;
+					$to_company = 'sopheak.peas@gmail.com';
+					//$cc = 'sopheak.peas@novacambodia.com';
 					$subject = 'Website Renewal Notice';
 					$message = '<html>
-								<body>
+								<body style="width: 600px; margin: 0 auto;">
+
 								<b>Dear '.$client_name.',</b>
 
 								<br />
-								        <p>Your domain names '.$domain_name.' that renew manually will expire on '.$date_expire.'. So please do reply to confirm to renew</p><br />
+								        <p>Your domain names '.$domain_name.' that renew manually will expire on <strong style="color: red;">'.$date_expire.'</strong>. So please do reply to confirm to renew</p><br />
+								        <table cellpadding="5" style="width: 100%;">
+								        	<tbody>
+								        		<tr>
+									        		<td style="border-top: 1px solid #ccc;">Description</td>
+									        		<td style="border-top: 1px solid #ccc;">Unit Price</td>
+									        		<td style="border-top: 1px solid #ccc;">Qty</td>
+									        		<td style="border-top: 1px solid #ccc;">Price</td>
+									        	</tr>
+									        	<tr>
+									        		<td style="border-top: 1px solid #ccc;">Website Hosting & Domain<br><span>'.$product_name.'</span></td>
+									        		<td style="border-top: 1px solid #ccc;">'.$unit_price.'.00</td>
+									        		<td style="border-top: 1px solid #ccc;">'.$qty.'</td>
+									        		<td style="border-top: 1px solid #ccc;">'.$total.'.00 USD</td>
+									        	</tr>
+									        	<tr>
+									        		<td style="border-top: 1px solid #ccc;"></td>
+									        		<td style="border-top: 1px solid #ccc;"></td>
+									        		<td style="border-top: 1px solid #ccc;">Total</td>
+									        		<td style="border-top: 1px solid #ccc;">'.$total.'.00 USD</td>
+									        	</tr>
+								        	<tbody>
+								        </table>
 								        <p>Kindly Regards</p><br />
-								        <p>NOVA (Cambodia) Co., Ltd</p>
-								        <p><b>P.</b> +855 090 223 677</p>
-								        <p><b>E.</b> sokheng.lay@novacambodia.com</p>
+								        <p>NOVA (Cambodia) Co., Ltd<br />
+								        <strong>P.</strong> +855 090 223 677<br />
+								        <strong>E.</strong> sokheng.lay@novacambodia.com</p>
 								</body>
 								</html>';
-					wp_mail( $to, $subject, $message );
+					$headers[] = 'From: Nova Cambodia <info@novacambodia.com>';
+					wp_mail( $to_client, $subject, $message, $headers );
+					//wp_mail( $to_company, $subject, $message, $headers );
 
 		endwhile; wp_reset_postdata();
 	?>
