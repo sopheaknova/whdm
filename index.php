@@ -40,7 +40,7 @@
 				while ( $custom_query->have_posts() ) : $custom_query->the_post(); ?>
 
 				<?php 
-					$reminder = 2592000; // 90 days = 7776000;
+					$reminder = ot_get_option( 'second' ); // 90 days = 7776000;
 					$expire_h = get_post_meta( $post->ID, 'sp_order_expire_date_h', true );
 					$expire_d = get_post_meta( $post->ID, 'sp_order_expire_date_d', true );
 					$before_reminder_h = strtotime($expire_h) - $reminder;
@@ -89,7 +89,7 @@
 						<br>
 
 						<?php
-							if ($reminder_h <= $reminder) :
+							if ($before_reminder_h <= $now) :
 								echo '<i style="color:red">Renewal</i>';
 							endif;
 						?>

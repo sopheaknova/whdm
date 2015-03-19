@@ -75,6 +75,10 @@ function custom_theme_options() {
 			'id'		=> 'styling',
 			'title'		=> 'Styling'
 		),
+		array(
+			'id'		=> 'reminder',
+			'title'		=> 'Reminder'
+		),
 	),
 	
 /*  Theme options
@@ -904,6 +908,15 @@ function custom_theme_options() {
 			'desc'		=> 'Set background color and/or upload your own background image',
 			'type'		=> 'background',
 			'section'	=> 'styling'
+		),
+		// Footer: Copyright
+		array(
+			'id'		=> 'second',
+			'label'		=> 'second Reminder',
+			'desc'		=> 'Replace the second Reminder',
+			'std'		=> '2592000',
+			'type'		=> 'text',
+			'section'	=> 'reminder'
 		)
 	)
 );
