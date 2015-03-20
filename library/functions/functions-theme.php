@@ -575,8 +575,8 @@ function wi_create_email(){
 			$client_email = sp_get_email_client( get_post_meta( $post->ID, 'sp_order_client_name', true ) );
 
 					$to_client = $client_email;
-					$to_company = 'sopheak.peas@gmail.com';
-					//$cc = 'sopheak.peas@novacambodia.com';
+					$to_company = ot_get_option( 'email-company' );
+					$cc = ot_get_option( 'email-staff' );
 					$subject = 'Website Renewal Notice';
 					$message = '<html>
 								<body style="width: 600px; margin: 0 auto;">
@@ -615,7 +615,8 @@ function wi_create_email(){
 								</html>';
 					$headers[] = 'From: Nova Cambodia <info@novacambodia.com>';
 					wp_mail( $to_client, $subject, $message, $headers );
-					//wp_mail( $to_company, $subject, $message, $headers );
+					$headers[] = 'CC:' . $cc; 
+					wp_mail( $to_company, $subject, $message, $headers );
 
 		endwhile; wp_reset_postdata();
 	?>

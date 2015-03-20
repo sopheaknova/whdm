@@ -79,6 +79,10 @@ function custom_theme_options() {
 			'id'		=> 'reminder',
 			'title'		=> 'Reminder'
 		),
+		array(
+			'id'		=> 'email',
+			'title'		=> 'Email Company'
+		),
 	),
 	
 /*  Theme options
@@ -909,7 +913,7 @@ function custom_theme_options() {
 			'type'		=> 'background',
 			'section'	=> 'styling'
 		),
-		// Footer: Copyright
+		// Reminder
 		array(
 			'id'		=> 'second',
 			'label'		=> 'Second Reminder',
@@ -917,7 +921,25 @@ function custom_theme_options() {
 			'std'		=> '2592000',
 			'type'		=> 'text',
 			'section'	=> 'reminder'
-		)
+		),
+		// Email Company
+		array(
+			'id'		=> 'email-company',
+			'label'		=> 'Email Company',
+			'desc'		=> 'Replace the Email',
+			'std'		=> 'sopheak.peas@gmail.com',
+			'type'		=> 'text',
+			'section'	=> 'email'
+		),
+		// Email Staff 
+		array(
+			'id'		=> 'email-staff',
+			'label'		=> 'Email Staff',
+			'desc'		=> 'Replace the Email',
+			'std'		=> 'sopheak.peas@novacambodia.com',
+			'type'		=> 'text',
+			'section'	=> 'email'
+		),
 	)
 );
 
