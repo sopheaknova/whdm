@@ -24,7 +24,7 @@
 		add_action( 'init', 'sp_order_cp_init' );
 		
 		//CP list table columns
-		//add_action( 'manage_posts_custom_column', 'sp_order_cp_custom_column' );
+		add_action( 'manage_posts_custom_column', 'sp_order_cp_custom_column' );
 
 	//FILTERS
 		//CP list table columns
@@ -102,6 +102,7 @@
 			
 			$columns['cb']                   	= '<input type="checkbox" />';
 			$columns['title']                	= __( 'Title', 'sptheme_admin' );
+			$columns['name']                	= __( 'Domain', 'sptheme_admin' );
 			$columns['date']		 			= __( 'Date', 'sptheme_admin' );
 
 			return $columns;
@@ -113,6 +114,19 @@
 	*
 	* $Col = TEXT [column id for switch]
 	*/
-	
+	if ( ! function_exists( 'sp_order_cp_custom_column' ) ) {
+		function sp_order_cp_custom_column( $column ) {
+			global $post;
 
+			switch ( $column ) {
+				
+				case "name":
+					echo get_post_meta( $post->ID, 'sp_order_domain_name_h', true );
+					break;
+
+				default:
+				break;
+			}
+		}
+	} // /sp_order_cp_custom_column
 	

@@ -81,7 +81,7 @@ function custom_theme_options() {
 		),
 		array(
 			'id'		=> 'email',
-			'title'		=> 'Email Company'
+			'title'		=> 'Email'
 		),
 	),
 	
@@ -922,6 +922,24 @@ function custom_theme_options() {
 			'type'		=> 'text',
 			'section'	=> 'reminder'
 		),
+		// Email Reply
+		array(
+			'id'		=> 'email-reply',
+			'label'		=> 'Email Reply',
+			'desc'		=> 'Email For Client Reply',
+			'std'		=> 'sokheng.lay@novacambodia.com',
+			'type'		=> 'text',
+			'section'	=> 'email',
+		),
+		// On-Off Email
+		array(
+			'id'		=> 'send-email',
+			'label'		=> 'Send Email',
+			'desc'		=> 'Dispaly/Hide Email For Send',
+			'std'		=> 'on',
+			'type'		=> 'on-off',
+			'section'	=> 'email'
+		),
 		// Email Company
 		array(
 			'id'		=> 'email-company',
@@ -929,7 +947,8 @@ function custom_theme_options() {
 			'desc'		=> 'Replace the Email',
 			'std'		=> 'sopheak.peas@gmail.com',
 			'type'		=> 'text',
-			'section'	=> 'email'
+			'section'	=> 'email',
+			'condition' => 'send-email:is(on)'
 		),
 		// Email Staff 
 		array(
@@ -938,7 +957,8 @@ function custom_theme_options() {
 			'desc'		=> 'Replace the Email',
 			'std'		=> 'sopheak.peas@novacambodia.com',
 			'type'		=> 'text',
-			'section'	=> 'email'
+			'section'	=> 'email',
+			'condition' => 'send-email:is(on)'
 		),
 	)
 );

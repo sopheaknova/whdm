@@ -267,6 +267,12 @@ $post_type_order_client = array(
 			'type'		=> 'custom-post-type-select',
 			'post_type' => 'sp_client',
 		),
+		array(
+			'label'		=> 'Is Tax?',
+			'id'		=> $prefix . 'order_tax',
+			'std'       => 'off',
+			'type'		=> 'on-off'
+		),
 	)
 );
 	   
@@ -281,7 +287,7 @@ $post_type_order_product_meta = array(
 		array(
 			'label'		=> 'Status',
 			'id'		=> $prefix . 'order_status_h',
-			'std'         => 'off',
+			'std'       => 'off',
 			'type'		=> 'on-off'
 		),
 		array(
@@ -290,28 +296,28 @@ $post_type_order_product_meta = array(
 			'type'		=> 'custom-post-type-select',
 			//'taxonomy' => 'sp_product_category',
 			'post_type'	=> 'sp_product',
-			'condition'   => 'sp_order_status_h:is(on)'
+			'condition' => 'sp_order_status_h:is(on)'
 		),
 		array(
 			'label'		=> 'Domain Name',
 			'id'		=> $prefix . 'order_domain_name_h',
 			'type'		=> 'text',
 			'desc'		=> 'Enter domain name of product',
-			'condition'   => 'sp_order_status_h:is(on)'
+			'condition' => 'sp_order_status_h:is(on)'
 		),
 		array(
 			'label'		=> 'Register Date',
 			'id'		=> $prefix . 'order_register_date_h',
 			'type'		=> 'date-picker',
 			'desc'		=> 'Select register date of product',
-			'condition'   => 'sp_order_status_h:is(on)'
+			'condition' => 'sp_order_status_h:is(on)'
 		),
 		array(
 			'label'		=> 'Expire Date',
 			'id'		=> $prefix . 'order_expire_date_h',
 			'type'		=> 'date-picker',
 			'desc'		=> 'Select expire date of product',
-			'condition'   => 'sp_order_status_h:is(on)'
+			'condition' => 'sp_order_status_h:is(on)'
 		),
 		array(
 			'label'		=> 'Period',
@@ -390,7 +396,7 @@ $post_type_order_additional_domain = array(
 		array(
 			'label'		=> 'Status',
 			'id'		=> $prefix . 'order_status_d',
-			'std'         => 'off',
+			'std'       => 'off',
 			'type'		=> 'on-off'
 		),
 		array(
@@ -399,7 +405,7 @@ $post_type_order_additional_domain = array(
 			'type'		=> 'custom-post-type-select',
 			//'taxonomy' => 'sp_product_category',
 			'post_type'	=> 'sp_product',
-			'condition'   => 'sp_order_status_d:is(on)'
+			'condition' => 'sp_order_status_d:is(on)'
 		),
 
 		array(
@@ -407,21 +413,21 @@ $post_type_order_additional_domain = array(
 			'id'		=> $prefix . 'order_domain_name_d',
 			'type'		=> 'text',
 			'desc'		=> 'Enter domain name of product',
-			'condition'   => 'sp_order_status_d:is(on)'
+			'condition' => 'sp_order_status_d:is(on)'
 		),
 		array(
 			'label'		=> 'Register Date',
 			'id'		=> $prefix . 'order_register_date_d',
 			'type'		=> 'date-picker',
 			'desc'		=> 'Select register date of product',
-			'condition'   => 'sp_order_status_d:is(on)'
+			'condition' => 'sp_order_status_d:is(on)'
 		),
 		array(
 			'label'		=> 'Expire Date',
 			'id'		=> $prefix . 'order_expire_date_d',
 			'type'		=> 'date-picker',
 			'desc'		=> 'Select expire date of product',
-			'condition'   => 'sp_order_status_d:is(on)'
+			'condition' => 'sp_order_status_d:is(on)'
 		),
 		array(
 			'label'		=> 'Period',

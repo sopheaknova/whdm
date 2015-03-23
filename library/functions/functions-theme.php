@@ -570,11 +570,16 @@ function wi_create_email(){
 			$qty 		  = get_post_meta( $post->ID, 'sp_order_period_h', true );
 			$total        = $qty * $unit_price ;
 			$date_expire  = get_post_meta( $post->ID, 'sp_order_expire_date_h', true );
-			$client_name  = get_the_title( get_post_meta( $post->ID, 'sp_order_client_name', true ) );
+			$client_name  = sp_get_contact_client( get_post_meta( $post->ID, 'sp_order_client_name', true ) );
 			$domain_name  = get_post_meta( $post->ID, 'sp_order_domain_name_h', true );
 			$client_email = sp_get_email_client( get_post_meta( $post->ID, 'sp_order_client_name', true ) );
+			if ( get_post_meta( $post->ID, 'sp_order_tax', true ) == "on" ) :
+				$tax = $total * 0.10 ;
+			endif;
+			$grand_total = $total + $tax ;
 
 					$to_client = $client_email;
+					$reply      = ot_get_option( 'email-reply' );
 					$to_company = ot_get_option( 'email-company' );
 					$cc = ot_get_option( 'email-staff' );
 					$subject = 'Website Renewal Notice';
@@ -584,7 +589,7 @@ function wi_create_email(){
 								<b>Dear '.$client_name.',</b>
 
 								<br />
-								        <p>Your domain names '.$domain_name.' that renew manually will expire on <strong style="color: red;">'.$date_expire.'</strong>. So please do reply to confirm to renew</p><br />
+								        <p>Your domain names '.$domain_name.' that renew manually will expire on <strong style="color: red;">'.date("j F, Y", strtotime($date_expire)).'</strong>. So please do reply to confirm to renew</p><br />
 								        <table cellpadding="5" style="width: 100%;">
 								        	<tbody>
 								        		<tr>
@@ -593,7 +598,7 @@ function wi_create_email(){
 									        		<td style="border-top: 1px solid #ccc;">Qty</td>
 									        		<td style="border-top: 1px solid #ccc;">Price</td>
 									        	</tr>
-									        	<tr>
+									        	<tr style="color: #999;">
 									        		<td style="border-top: 1px solid #ccc;">Website Hosting & Domain<br><span>'.$product_name.'</span></td>
 									        		<td style="border-top: 1px solid #ccc;">'.$unit_price.'.00</td>
 									        		<td style="border-top: 1px solid #ccc;">'.$qty.'</td>
@@ -605,18 +610,33 @@ function wi_create_email(){
 									        		<td style="border-top: 1px solid #ccc;">Total</td>
 									        		<td style="border-top: 1px solid #ccc;">'.$total.'.00 USD</td>
 									        	</tr>
+									        	<tr>
+									        		<td></td>
+									        		<td></td>
+									        		<td>VAT 10%</td>
+									        		<td>'.$tax.' USD</td>
+									        	</tr>
+									        	<tr>
+									        		<td></td>
+									        		<td></td>
+									        		<td>Grand Total</td>
+									        		<td>'.$grand_total.' USD</td>
+									        	</tr>
 								        	<tbody>
 								        </table>
-								        <p>Kindly Regards</p><br />
+								        <p>Kindly Regards</p>
 								        <p>NOVA (Cambodia) Co., Ltd<br />
 								        <strong>P.</strong> +855 090 223 677<br />
 								        <strong>E.</strong> sokheng.lay@novacambodia.com</p>
 								</body>
 								</html>';
-					$headers[] = 'From: Nova Cambodia <info@novacambodia.com>';
+					$headers[] = 'From: Nova Cambodia <'.$reply.'>';
 					wp_mail( $to_client, $subject, $message, $headers );
-					$headers[] = 'CC:' . $cc; 
-					wp_mail( $to_company, $subject, $message, $headers );
+
+					if ( ot_get_option( 'send-email' ) == "on" ) :
+						$headers[] = 'CC:' . $cc; 
+						wp_mail( $to_company, $subject, $message, $headers );
+					endif;
 
 		endwhile; wp_reset_postdata();
 	?>
@@ -636,7 +656,14 @@ function wi_add_minute_schedule( $schedules ) {
 
 function sp_get_email_client( $post_id ) {
 	global $post;
-	$client = get_post_meta( $post_id, 'sp_client_email', true );
+	$email_client = get_post_meta( $post_id, 'sp_client_email', true );
 	
-	return $client;
+	return $email_client;
+}
+
+function sp_get_contact_client( $post_id ) {
+	global $post;
+	$contact_client = get_post_meta( $post_id, 'sp_client_contact_name', true );
+	
+	return $contact_client;
 }
