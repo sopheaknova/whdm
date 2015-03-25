@@ -585,7 +585,17 @@ function wi_create_email(){
 					$subject = 'Website Renewal Notice';
 					$message = '<html>
 								<body style="width: 600px; margin: 0 auto;">
-
+								<div style="float:left;">
+									<img style="width:110px;" src="' . SP_ASSETS .'/images/logo-email.png">
+								</div>
+								<div style="float:right;">
+									<i style="font-size: 12px; color:#999;">'.$client_name.', you have website about to expire.<i>
+									<p style="font-size: 12px; margin-top:0; color:#999;">24/7 Support: <strong>+855 23 223 577<strong></p>
+								</div>
+								<div style="max-width: 100%; padding: 30px; background:#f96f00; margin-bottom:20px; clear:both;">
+									<h1 style="font-size: 28px; margin:0; color:#ffffff;">Expiration Notice</h1>
+									<p style="font-size: 18px; margin:0; color:#ffffff;">You are at risk of losing the items listed below.</p>
+								</div>
 								<b>Dear '.$client_name.',</b>
 
 								<br />
@@ -626,8 +636,9 @@ function wi_create_email(){
 								        </table>
 								        <p>Kindly Regards</p>
 								        <p>NOVA (Cambodia) Co., Ltd<br />
-								        <strong>P.</strong> +855 090 223 677<br />
-								        <strong>E.</strong> sokheng.lay@novacambodia.com</p>
+								        <strong>P.</strong> +855 15 777 570<br />
+								        <strong>E.</strong> sokheng.lay@novacambodia.com</p><br />
+								        <img style="max-width:100%;" src="' . SP_ASSETS .'/images/nova-signature.gif">
 								</body>
 								</html>';
 					$headers[] = 'From: Nova Cambodia <'.$reply.'>';
