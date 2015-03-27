@@ -383,118 +383,134 @@ $post_type_order_product_meta = array(
 	        ),
 			'condition'   => 'sp_order_status_h:is(on)'
 		),
-	)
-);
-$post_type_order_additional_domain = array(
-	'id'          => 'order-additional-domain',
-	'title'       => 'Additional Domain meta',
-	'desc'        => '',
-	'pages'       => array( 'sp_order' ),
-	'context'     => 'normal',
-	'priority'    => 'high',
-	'fields'      => array(
 		array(
-			'label'		=> 'Status',
-			'id'		=> $prefix . 'order_status_d',
-			'std'       => 'off',
-			'type'		=> 'on-off'
-		),
-		array(
-			'label'		=> 'Domain Type',
-			'id'		=> $prefix . 'order_domain_type_d',
-			'type'		=> 'custom-post-type-select',
-			//'taxonomy' => 'sp_product_category',
-			'post_type'	=> 'sp_product',
-			'condition' => 'sp_order_status_d:is(on)'
-		),
+			'label'		=> 'Extra Product',
+			'id'		=> $prefix . 'extra_product',
+			'type'		=> 'list-item',
+			'desc'		=> 'Add extra product link of each order',
+			'settings'	=> array( 
+		        array(
+					'label'		=> 'Hosting Package',
+					'id'		=> $prefix . 'order_extra_product',
+					'type'		=> 'custom-post-type-select',
+					'post_type'	=> 'sp_product',
 
-		array(
-			'label'		=> 'Domain Name',
-			'id'		=> $prefix . 'order_domain_name_d',
-			'type'		=> 'text',
-			'desc'		=> 'Enter domain name of product',
-			'condition' => 'sp_order_status_d:is(on)'
-		),
-		array(
-			'label'		=> 'Register Date',
-			'id'		=> $prefix . 'order_register_date_d',
-			'type'		=> 'date-picker',
-			'desc'		=> 'Select register date of product',
-			'condition' => 'sp_order_status_d:is(on)'
-		),
-		array(
-			'label'		=> 'Expire Date',
-			'id'		=> $prefix . 'order_expire_date_d',
-			'type'		=> 'date-picker',
-			'desc'		=> 'Select expire date of product',
-			'condition' => 'sp_order_status_d:is(on)'
-		),
-		array(
-			'label'		=> 'Period',
-			'id'		=> $prefix . 'order_period_d',
-			'type'		=> 'select',
-			'desc'		=> 'Select period type(1 Year to 10 Year)',
-			'choices'	=> array( 
-	          array(
-	            'value'       => '',
-	            'label'       => 'none',
-	            'src'         => ''
-	          ),
-	          array(
-	            'value'       => '1',
-	            'label'       => '1 Year',
-	            'src'         => ''
-	          ),
-	          array(
-	            'value'       => '2',
-	            'label'       => '2 Years',
-	            'src'         => ''
-	          ),
-	          array(
-	            'value'       => '3',
-	            'label'       => '3 Years',
-	            'src'         => ''
-	          ),
-	          array(
-	            'value'       => '4',
-	            'label'       => '4 Years',
-	            'src'         => ''
-	          ),
-	          array(
-	            'value'       => '5',
-	            'label'       => '5 Years',
-	            'src'         => ''
-	          ),
-	          array(
-	            'value'       => '6',
-	            'label'       => '6 Years',
-	            'src'         => ''
-	          ),
-	          array(
-	            'value'       => '7',
-	            'label'       => '7 Years',
-	            'src'         => ''
-	          ),
-	          array(
-	            'value'       => '8',
-	            'label'       => '8 Years',
-	            'src'         => ''
-	          ),
-	          array(
-	            'value'       => '9',
-	            'label'       => '9 Years',
-	            'src'         => ''
-	          ),
-	          array(
-	            'value'       => '10',
-	            'label'       => '10 Years',
-	            'src'         => ''
-	          )
-	        ),
-			'condition'   => 'sp_order_status_d:is(on)'
-		),
+			    ),
+			'condition' => 'sp_order_status_h:is(on)'
+	        )  
+		)
 	)
 );
+// $post_type_order_additional_domain = array(
+// 	'id'          => 'order-additional-domain',
+// 	'title'       => 'Additional Domain meta',
+// 	'desc'        => '',
+// 	'pages'       => array( 'sp_order' ),
+// 	'context'     => 'normal',
+// 	'priority'    => 'high',
+// 	'fields'      => array(
+// 		array(
+// 			'label'		=> 'Status',
+// 			'id'		=> $prefix . 'order_status_d',
+// 			'std'       => 'off',
+// 			'type'		=> 'on-off'
+// 		),
+// 		array(
+// 			'label'		=> 'Domain Type',
+// 			'id'		=> $prefix . 'order_domain_type_d',
+// 			'type'		=> 'custom-post-type-select',
+// 			//'taxonomy' => 'sp_product_category',
+// 			'post_type'	=> 'sp_product',
+// 			'condition' => 'sp_order_status_d:is(on)'
+// 		),
+
+// 		array(
+// 			'label'		=> 'Domain Name',
+// 			'id'		=> $prefix . 'order_domain_name_d',
+// 			'type'		=> 'text',
+// 			'desc'		=> 'Enter domain name of product',
+// 			'condition' => 'sp_order_status_d:is(on)'
+// 		),
+// 		array(
+// 			'label'		=> 'Register Date',
+// 			'id'		=> $prefix . 'order_register_date_d',
+// 			'type'		=> 'date-picker',
+// 			'desc'		=> 'Select register date of product',
+// 			'condition' => 'sp_order_status_d:is(on)'
+// 		),
+// 		array(
+// 			'label'		=> 'Expire Date',
+// 			'id'		=> $prefix . 'order_expire_date_d',
+// 			'type'		=> 'date-picker',
+// 			'desc'		=> 'Select expire date of product',
+// 			'condition' => 'sp_order_status_d:is(on)'
+// 		),
+// 		array(
+// 			'label'		=> 'Period',
+// 			'id'		=> $prefix . 'order_period_d',
+// 			'type'		=> 'select',
+// 			'desc'		=> 'Select period type(1 Year to 10 Year)',
+// 			'choices'	=> array( 
+// 	          array(
+// 	            'value'       => '',
+// 	            'label'       => 'none',
+// 	            'src'         => ''
+// 	          ),
+// 	          array(
+// 	            'value'       => '1',
+// 	            'label'       => '1 Year',
+// 	            'src'         => ''
+// 	          ),
+// 	          array(
+// 	            'value'       => '2',
+// 	            'label'       => '2 Years',
+// 	            'src'         => ''
+// 	          ),
+// 	          array(
+// 	            'value'       => '3',
+// 	            'label'       => '3 Years',
+// 	            'src'         => ''
+// 	          ),
+// 	          array(
+// 	            'value'       => '4',
+// 	            'label'       => '4 Years',
+// 	            'src'         => ''
+// 	          ),
+// 	          array(
+// 	            'value'       => '5',
+// 	            'label'       => '5 Years',
+// 	            'src'         => ''
+// 	          ),
+// 	          array(
+// 	            'value'       => '6',
+// 	            'label'       => '6 Years',
+// 	            'src'         => ''
+// 	          ),
+// 	          array(
+// 	            'value'       => '7',
+// 	            'label'       => '7 Years',
+// 	            'src'         => ''
+// 	          ),
+// 	          array(
+// 	            'value'       => '8',
+// 	            'label'       => '8 Years',
+// 	            'src'         => ''
+// 	          ),
+// 	          array(
+// 	            'value'       => '9',
+// 	            'label'       => '9 Years',
+// 	            'src'         => ''
+// 	          ),
+// 	          array(
+// 	            'value'       => '10',
+// 	            'label'       => '10 Years',
+// 	            'src'         => ''
+// 	          )
+// 	        ),
+// 			'condition'   => 'sp_order_status_d:is(on)'
+// 		),
+// 	)
+// );
 
 /*  Register meta boxes
 /* ------------------------------------ */
@@ -509,5 +525,5 @@ $post_type_order_additional_domain = array(
 	ot_register_meta_box( $post_type_product );
 	ot_register_meta_box( $post_type_order_client );
 	ot_register_meta_box( $post_type_order_product_meta );
-	ot_register_meta_box( $post_type_order_additional_domain );
+	//ot_register_meta_box( $post_type_order_additional_domain );
 }

@@ -564,19 +564,18 @@ function wi_create_email(){
 	$custom_query = new WP_Query( $args );
 	if( $custom_query->have_posts() ) :
 		while ( $custom_query->have_posts() ) : $custom_query->the_post();
-			$product_id   = get_post_meta( $post->ID, 'sp_order_hosting_package_h', true );
-			$product_name = get_the_title($product_id);
-			$unit_price   = get_post_meta( $product_id, 'sp_product_price', true );
-			$qty 		  = get_post_meta( $post->ID, 'sp_order_period_h', true );
-			$total        = $qty * $unit_price ;
-			$date_expire  = get_post_meta( $post->ID, 'sp_order_expire_date_h', true );
-			$client_name  = sp_get_contact_client( get_post_meta( $post->ID, 'sp_order_client_name', true ) );
-			$domain_name  = get_post_meta( $post->ID, 'sp_order_domain_name_h', true );
-			$client_email = sp_get_email_client( get_post_meta( $post->ID, 'sp_order_client_name', true ) );
-			if ( get_post_meta( $post->ID, 'sp_order_tax', true ) == "on" ) :
-				$tax = $total * 0.10 ;
-			endif;
-			$grand_total = $total + $tax ;
+			$product_id   		 = get_post_meta( $post->ID, 'sp_order_hosting_package_h', true );
+			$order_name 		 = get_the_title();
+			$unit_price   		 = get_post_meta( $product_id, 'sp_product_price', true );
+			$qty 		  		 = get_post_meta( $post->ID, 'sp_order_period_h', true );
+			$date_expire  		 = get_post_meta( $post->ID, 'sp_order_expire_date_h', true );
+			$client_name  	     = sp_get_contact_client( get_post_meta( $post->ID, 'sp_order_client_name', true ) );
+			$domain_name  		 = get_post_meta( $post->ID, 'sp_order_domain_name_h', true );
+			$client_email 	     = sp_get_email_client( get_post_meta( $post->ID, 'sp_order_client_name', true ) );
+			$extra_products 	 = get_post_meta($post->ID, 'sp_extra_product', true);
+			$total_extra_product = '';
+			$total_item        	 = $qty * $unit_price ;
+			
 
 					$to_client = $client_email;
 					$reply      = ot_get_option( 'email-reply' );
@@ -585,9 +584,6 @@ function wi_create_email(){
 					$subject = 'Website Renewal Notice';
 					$message = '<html>
 								<body style="width: 600px; margin: 0 auto;">
-								<div style="float:left;">
-									<img style="width:110px;" src="' . SP_ASSETS .'/images/logo-email.png">
-								</div>
 								<div style="float:right;">
 									<i style="font-size: 12px; color:#999;">'.$client_name.', you have website about to expire.<i>
 									<p style="font-size: 12px; margin-top:0; color:#999;">24/7 Support: <strong>+855 23 223 577<strong></p>
@@ -596,41 +592,64 @@ function wi_create_email(){
 									<h1 style="font-size: 28px; margin:0; color:#ffffff;">Expiration Notice</h1>
 									<p style="font-size: 18px; margin:0; color:#ffffff;">You are at risk of losing the items listed below.</p>
 								</div>
-								<b>Dear '.$client_name.',</b>
+								<b>Dear '.$client_name. ',</b>
 
 								<br />
-								        <p>Your domain names '.$domain_name.' that renew manually will expire on <strong style="color: red;">'.date("j F, Y", strtotime($date_expire)).'</strong>. So please do reply to confirm to renew</p><br />
+								        <p>Your domain names '.$domain_name.' that renew manually will expire on <strong style="color: red;">'.date("j F, Y", strtotime($date_expire) - 604800 ).'</strong>. So please do reply to confirm to renew</p><br />
 								        <table cellpadding="5" style="width: 100%;">
 								        	<tbody>
 								        		<tr>
 									        		<td style="border-top: 1px solid #ccc;">Description</td>
-									        		<td style="border-top: 1px solid #ccc;">Unit Price</td>
-									        		<td style="border-top: 1px solid #ccc;">Qty</td>
-									        		<td style="border-top: 1px solid #ccc;">Price</td>
+									        		<td style="border-top: 1px solid #ccc; text-align: right;">Price/Year</td>
+									        		<td style="border-top: 1px solid #ccc; text-align: right;">Year</td>
+									        		<td style="border-top: 1px solid #ccc; text-align: right;">Price</td>
 									        	</tr>
 									        	<tr style="color: #999;">
-									        		<td style="border-top: 1px solid #ccc;">Website Hosting & Domain<br><span>'.$product_name.'</span></td>
-									        		<td style="border-top: 1px solid #ccc;">'.$unit_price.'.00</td>
-									        		<td style="border-top: 1px solid #ccc;">'.$qty.'</td>
-									        		<td style="border-top: 1px solid #ccc;">'.$total.'.00 USD</td>
-									        	</tr>
-									        	<tr>
+									        		<td style="border-top: 1px solid #ccc;">'.$order_name.'</td>
+									        		<td style="border-top: 1px solid #ccc; text-align: right;">'.$unit_price.'.00</td>
+									        		<td style="border-top: 1px solid #ccc; text-align: right;">'.$qty.'</td>
+									        		<td style="border-top: 1px solid #ccc; text-align: right;">'.$total_item.'.00 USD</td>
+									        	</tr>';
+
+									if ( !empty($extra_products) ) : 
+									    foreach ($extra_products as $extra_product ) {
+									    	
+									    	$extra_product_price 		= get_post_meta( $extra_product['sp_order_extra_product'], 'sp_product_price', true );
+									    	$total_extra_product_price 	= $qty * $extra_product_price ;
+									    	$total_extra_product 	   += $total_extra_product_price;
+
+										$message .='<tr style="color: #999;">
+									        		<td style="border-top: 1px solid #ccc;">'. $extra_product['title'] .'</td>
+									        		<td style="border-top: 1px solid #ccc; text-align: right;">'.$extra_product_price.'.00</td>
+									        		<td style="border-top: 1px solid #ccc; text-align: right;">'.$qty.'</td>
+									        		<td style="border-top: 1px solid #ccc; text-align: right;">'.$total_extra_product_price.'.00 USD</td>
+									        	</tr>';
+										}
+									endif;
+
+									$sub_total = $total_extra_product + $total_item ;
+									if ( get_post_meta( $post->ID, 'sp_order_tax', true ) == "on" ) :
+										$tax = $sub_total * 0.10 ;
+									endif;
+									$grand_total = $sub_total + $tax ;
+
+									$message .='<tr>
 									        		<td style="border-top: 1px solid #ccc;"></td>
-									        		<td style="border-top: 1px solid #ccc;"></td>
-									        		<td style="border-top: 1px solid #ccc;">Total</td>
-									        		<td style="border-top: 1px solid #ccc;">'.$total.'.00 USD</td>
+									        		<td style="border-top: 1px solid #ccc; text-align: right;"></td>
+									        		<td style="border-top: 1px solid #ccc; text-align: right;">Sub-Total</td>
+									        		<td style="border-top: 1px solid #ccc; text-align: right;">'.$sub_total.'.00 USD</td>
 									        	</tr>
 									        	<tr>
 									        		<td></td>
 									        		<td></td>
-									        		<td>VAT 10%</td>
-									        		<td>'.$tax.' USD</td>
+									        		<td style="text-align: right;">VAT 10%</td>
+									        		<td style="text-align: right;">'.$tax.' USD</td>
 									        	</tr>
 									        	<tr>
 									        		<td></td>
 									        		<td></td>
-									        		<td>Grand Total</td>
-									        		<td>'.$grand_total.' USD</td>
+									        		<td style="text-align: right;">Grand-Total</td>
+									        		<td style="text-align: right;">'.$grand_total.' USD</td>
 									        	</tr>
 								        	<tbody>
 								        </table>
