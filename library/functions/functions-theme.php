@@ -527,16 +527,16 @@ if ( ! function_exists( 'sp_last_posts_cat' ) ) {
  * ----------------------------------------------------------------------------------------
  */
 
-add_action( 'wp', 'wi_create_send_email_schedule' );
-add_action( 'wi_create_send_email', 'wi_create_email');
-add_filter( 'cron_schedules', 'wi_add_minute_schedule' ); 
+add_action( 'wp', 'sp_create_send_email_schedule' );
+add_action( 'sp_create_send_email', 'sp_create_email');
+add_filter( 'cron_schedules', 'sp_add_corn_schedule' ); 
 add_filter( 'wp_mail_content_type','set_content_type' );
 
-function wi_create_send_email_schedule(){
-	$timestamp = wp_next_scheduled( 'wi_create_send_email');
+function sp_create_send_email_schedule(){
+	$timestamp = wp_next_scheduled( 'sp_create_send_email');
 	
 	if( $timestamp == false ){
-		wp_schedule_event( time(), 'one_minute', 'wi_create_send_email');
+		wp_schedule_event( time(), 'weekly', 'sp_create_send_email');
 	}
 }
 
@@ -544,7 +544,7 @@ function set_content_type(){
 	return "text/html";
 }
 
-function wi_create_email(){
+function sp_create_email(){
 	global $post;
 	$reminder = ot_get_option( 'second' ); // 90 days = 7776000;
 	$args = array(
@@ -676,10 +676,14 @@ function wi_create_email(){
 	endif; 
 }
 
-function wi_add_minute_schedule( $schedules ) {
-  $schedules['one_minute'] = array(
-    'interval' => 60, // 60 seconds
-    'display' => __( 'Every one minute', 'my-plugin-domain' )
+function sp_add_corn_schedule( $schedules ) {
+  /*$schedules['per_minute'] = array(
+    'interval' => 60, // Every minute
+    'display' => __( 'In every minute', SP_TEXT_DOMAIN )
+  );*/
+  $schedules['weekly'] = array(
+    'interval' => 7 * 24 * 60 * 60, //7 days * 24 hours * 60 minutes * 60 seconds 
+    'display' => __( 'Once Weekly', SP_TEXT_DOMAIN )
   );
   return $schedules;
 }
