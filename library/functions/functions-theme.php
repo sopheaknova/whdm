@@ -534,6 +534,7 @@ add_filter( 'wp_mail_content_type','set_content_type' );
 
 function sp_create_send_email_schedule(){
 	$timestamp = wp_next_scheduled( 'sp_create_send_email');
+	wp_clear_scheduled_hook( 'per_minute' );
 	
 	if( $timestamp == false ){
 		wp_schedule_event( time(), 'weekly', 'sp_create_send_email');
@@ -595,7 +596,7 @@ function sp_create_email(){
 								<b>Dear '.$client_name. ',</b>
 
 								<br />
-								        <p>Your domain names '.$domain_name.' that renew manually will expire on <strong style="color: red;">'.date("j F, Y", strtotime($date_expire) - 604800 ).'</strong>. So please do reply to confirm to renew</p><br />
+								        <p>Your domain names '.$domain_name.' and hosting that renew manually will expire on <strong style="color: red;">'.date("j F, Y", strtotime($date_expire) - 604800 ).'</strong>. So please do reply to confirm to renew</p><br />
 								        <table cellpadding="5" style="width: 100%;">
 								        	<tbody>
 								        		<tr>
